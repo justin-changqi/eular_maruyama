@@ -32,17 +32,58 @@ void EulerMaruyama::generateW()
   {
     double z = distribution(generator);
     // std::cout << z << std::endl;
-    this->w.push_back(w[i-1] + (this->r*w[i-1]*this->dt) + (this->sigma*w[i-1]*z*sqrt(this->dt)));
+    double s = w[i-1] + (this->r*w[i-1]*this->dt) + (this->sigma*w[i-1]*z*sqrt(this->dt));
+    this->w.push_back(s);
   }
   for(int i=0; i<this->w.size(); i++)
   {
     std::cout << this->w[i] << ", ";
   }
-    std::cout << std::endl;
+  std::cout << std::endl;
+}
+
+std::vector<double> EulerMaruyama::AfixedStrike(bool call_option)
+{
+  std::vector<double> result;
+  for (int i=0; i<this->N; i++)
+  {
+    // result.push_back(std::max(this->st_mean - this->E, 0.0));
+    // std::cout << std::max( - this->E, 0.0) << ", ";
+  }
+  std::cout << std::endl;
+  return result;
+}
+
+std::vector<double> EulerMaruyama::AfloatingStrike(bool call_option)
+{
+
+}
+
+std::vector<double> EulerMaruyama::GfixedStrike(bool call_option)
+{
+
+}
+
+std::vector<double> EulerMaruyama::GfloatingStrike(bool call_option)
+{
+
+}
+
+void EulerMaruyama::makePayoffVector()
+{
+  this->payoff_v.push_back(this->AfixedStrike(true));
+  this->payoff_v.push_back(this->AfloatingStrike(true));
+  this->payoff_v.push_back(this->GfixedStrike(true));
+  this->payoff_v.push_back(this->GfloatingStrike(true));
+  this->payoff_v.push_back(this->AfixedStrike(false));
+  this->payoff_v.push_back(this->AfloatingStrike(false));
+  this->payoff_v.push_back(this->GfixedStrike(false));
+  this->payoff_v.push_back(this->GfloatingStrike(false));
 }
 
 int main() {
   EulerMaruyama eular_maruyama = EulerMaruyama(100, 100, 1, 0.2, 0.05, 10);
   eular_maruyama.generateW();
+  eular_maruyama.AfixedStrike(true);
   return 0;
 }

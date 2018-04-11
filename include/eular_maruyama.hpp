@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <random>
+#include <algorithm> // max
 
 class EulerMaruyama
 {
@@ -15,14 +16,15 @@ public:
                  int number_of_sample_data);
   ~EulerMaruyama();
   void generateW();
+  std::vector<double> AfixedStrike(bool call_option);
+  std::vector<double> AfloatingStrike(bool call_option);
+  std::vector<double> GfixedStrike(bool call_option);
+  std::vector<double> GfloatingStrike(bool call_option);
+  void makePayoffVector();
 
 private:
-  double s0;
-  int E;
-  double T;
-  double sigma;
-  double r;
-  int N;
-  double dt;
+  double s0, T, sigma, r, dt;
+  int E, N;
   std::vector<double> w;
+  std::vector<std::vector<double>> payoff_v;
 };
