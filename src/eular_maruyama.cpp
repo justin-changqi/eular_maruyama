@@ -43,7 +43,7 @@ void EulerMaruyama::generateW()
   }
   this->st_mean /= (double)this->N;
   this->st_ln_mean /= (double)this->N;
-  this->payoff_wight = exp(-(this->N)*this->r);
+  this->payoff_wight = exp(-this->r);
   // // Print
   // std::cout << this->st_mean << std::endl;
   // for(int i=0; i<this->w.size(); i++)
@@ -177,9 +177,14 @@ void EulerMaruyama::showSimResult()
 }
 
 int main() {
-  EulerMaruyama eular_maruyama = EulerMaruyama(100, 100, 1, 0.2, 0.05, 10000, 10);
+  EulerMaruyama eular_maruyama_continuous = EulerMaruyama(100, 100, 1, 0.2, 0.05, 10000, 10000);
+  EulerMaruyama eular_maruyama_discrete = EulerMaruyama(100, 100, 1, 0.2, 0.05, 10000, 100);
   // eular_maruyama.payoffsFunctionVerify();
-  eular_maruyama.runSimulation();
-  eular_maruyama.showSimResult();
+  eular_maruyama_continuous.runSimulation();
+  eular_maruyama_discrete.runSimulation();
+  std::cout << "Continuous:" << std::endl;
+  eular_maruyama_continuous.showSimResult();
+  std::cout << "\nDiscrete:" << std::endl;
+  eular_maruyama_discrete.showSimResult();
   return 0;
 }
