@@ -4,6 +4,7 @@
 #include <cmath>
 #include <random>
 #include <algorithm> // max
+#include <chrono>
 
 class EulerMaruyama
 {
@@ -13,18 +14,19 @@ public:
                  double time_to_expiry,
                  double volatility,
                  double risk_free_interest_rate,
+                 int number_of_simulation,
                  int number_of_sample_data);
   ~EulerMaruyama();
   void generateW();
-  std::vector<double> AfixedStrike(bool call_option);
-  std::vector<double> AfloatingStrike(bool call_option);
-  std::vector<double> GfixedStrike(bool call_option);
-  std::vector<double> GfloatingStrike(bool call_option);
+  double AfixedStrike(bool call_option);
+  double AfloatingStrike(bool call_option);
+  double GfixedStrike(bool call_option);
+  double GfloatingStrike(bool call_option);
   void makePayoffVector();
 
 private:
-  double s0, T, sigma, r, dt;
-  int E, N;
+  double s0, T, sigma, r, dt, st_mean, st_log_mean;
+  int E, N, N_sim;
   std::vector<double> w;
-  std::vector<std::vector<double>> payoff_v;
+  std::vector<double> payoff_v;
 };
