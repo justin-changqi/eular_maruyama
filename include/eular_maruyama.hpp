@@ -23,9 +23,13 @@ public:
   double GfixedStrike(bool call_option);
   double GfloatingStrike(bool call_option);
   void makePayoffVector();
+  void payoffsFunctionVerify();
+  double getRiskNeualDensityQ(double payoff);
+  void runSimulation();
 
 private:
   double s0, T, sigma, r, dt, st_mean, st_log_mean;
+  int sim_result_v[8] = { 0, 0, 0, 0, 0, 0, 0, 0};
   int E, N, N_sim;
   std::vector<double> w;
   std::vector<double> payoff_v;

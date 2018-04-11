@@ -125,16 +125,36 @@ void EulerMaruyama::makePayoffVector()
   this->payoff_v.push_back(this->GfloatingStrike(false));
 }
 
+void EulerMaruyama::payoffsFunctionVerify()
+{
+  this->generateW();
+  std::cout  << "Call Option Arithmetic Fixed Strike: \t" << this->AfixedStrike(true) << std::endl;
+  std::cout  << "Put Option Arithmetic Fixed Strike: \t" << this->AfixedStrike(false) << std::endl;
+  std::cout  << "Call Option Arithmetic Floating Strike:\t" << this->AfloatingStrike(true) << std::endl;
+  std::cout  << "Put Option Arithmetic Floating Strike: \t" << this->AfloatingStrike(false) << std::endl;
+  std::cout  << "Call Option Geometric Fixed Strike: \t" << this->GfixedStrike(true) << std::endl;
+  std::cout  << "Put Option Geometric Fixed Strike: \t" << this->GfixedStrike(false) << std::endl;
+  std::cout  << "Call Option Geometric Floating Strike: \t" << this->GfloatingStrike(true) << std::endl;
+  std::cout  << "Put Option Geometric Floating Strike: \t" << this->GfloatingStrike(false) << std::endl;
+}
+
+double EulerMaruyama::getRiskNeualDensityQ(double payoff)
+{
+  
+}
+
+void EulerMaruyama::runSimulation()
+{
+
+  for (int i=0; i<this->N_sim; i++)
+  {
+    this->generateW();
+    this->sim_result_v[0] += this->AfixedStrike(true);
+  }
+}
+
 int main() {
   EulerMaruyama eular_maruyama = EulerMaruyama(100, 100, 1, 0.2, 0.05, 10000, 10);
-  eular_maruyama.generateW();
-  std::cout  << eular_maruyama.AfixedStrike(true) << std::endl;
-  std::cout  << eular_maruyama.AfixedStrike(false) << std::endl;
-  std::cout  << eular_maruyama.AfloatingStrike(true) << std::endl;
-  std::cout  << eular_maruyama.AfloatingStrike(false) << std::endl;
-  std::cout  << eular_maruyama.GfixedStrike(true) << std::endl;
-  std::cout  << eular_maruyama.GfixedStrike(false) << std::endl;
-  std::cout  << eular_maruyama.GfloatingStrike(true) << std::endl;
-  std::cout  << eular_maruyama.GfloatingStrike(false) << std::endl;
+  eular_maruyama.payoffsFunctionVerify();
   return 0;
 }
